@@ -3,6 +3,7 @@ import requests
 import io
 import platform
 import os
+import logging
 
 if platform.system() != "Windows":
     from dotenv import load_dotenv
@@ -48,6 +49,7 @@ def tel_send_image(chat_id):
  
 @ app.route('/', methods=['GET', 'POST'])
 def index():
+    app.logger.debug("index")
     if request.method == 'POST':
         msg = request.get_json()
         try:
