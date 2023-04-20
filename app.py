@@ -49,7 +49,7 @@ def tel_send_image(chat_id):
  
 @ app.route('/', methods=['GET', 'POST'])
 def index():
-    app.logger.debug("index")
+    app.logger.info("index")
     if request.method == 'POST':
         msg = request.get_json()
         try:
