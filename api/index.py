@@ -57,13 +57,10 @@ def index():
         msg = request.get_json()
         try:
             chat_id, txt = tel_parse_message(msg)
-            if txt == "hi":
+            if txt.startswith("hi"):
                 tel_send_message(chat_id,"Hello, world!")
             elif txt.startswith("/image"):
                 tel_send_image(chat_id, txt)
- 
-            else:
-                tel_send_message(chat_id, 'from webhook')
         except:
             print("from index-->")
  
