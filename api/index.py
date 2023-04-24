@@ -1,10 +1,8 @@
 from flask import Flask, request, Response
 import requests
-import io
-import platform
 import os
-import logging
-import json
+from craiyonapi import CraiyonAPI
+
 
 app = Flask(__name__)
 
@@ -40,10 +38,12 @@ def generate_image(text):
     return result.images[0]
  
 def tel_send_image(chat_id, txt):
+    # generate our image first
+    image = generate_image(txt)
     url = f'https://api.telegram.org/bot{TOKEN}/sendPhoto'
     payload = {
         'chat_id': chat_id,
-        'photo': "https://i.imgur.com/OYWK7pR.jpeg",
+        'photo': image[0],
         'caption': txt
     }
  
@@ -59,7 +59,7 @@ def index():
             chat_id, txt = tel_parse_message(msg)
             if txt == "hi":
                 tel_send_message(chat_id,"Hello, world!")
-            elif txt.startswith("image"):
+            elif txt.startswith("/image"):
                 tel_send_image(chat_id, txt)
  
             else:
