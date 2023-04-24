@@ -1,3 +1,4 @@
+git+https://github.com/andrewtryder/python-craiyon-api.git
 click
 Flask
 gunicorn
@@ -6,4 +7,3 @@ Jinja2
 MarkupSafe
 Werkzeug
 requests
-git+https://github.com/andrewtryder/python-craiyon-api.git
