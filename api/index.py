@@ -43,7 +43,7 @@ def tel_send_image(chat_id, txt):
     url = f'https://api.telegram.org/bot{TOKEN}/sendPhoto'
     payload = {
         'chat_id': chat_id,
-        'photo': image[0],
+        'photo': image,
         'caption': txt
     }
  
