@@ -1,9 +1,3 @@
 git+https://github.com/andrewtryder/python-craiyon-api.git
-click
 Flask
-gunicorn
-itsdangerous
-Jinja2
-MarkupSafe
-Werkzeug
 requests
