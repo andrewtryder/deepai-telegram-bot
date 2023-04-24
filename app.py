@@ -4,11 +4,8 @@ import io
 import platform
 import os
 import logging
+import json
 
-if platform.system() != "Windows":
-    from dotenv import load_dotenv
-    load_dotenv()
- 
 app = Flask(__name__)
 
 TOKEN = os.environ.get('TELEGRAM_TOKEN')
@@ -33,15 +30,21 @@ def tel_send_message(chat_id, text):
                 }
    
     r = requests.post(url,json=payload)
- 
     return r
+
+def generate_image(text):
+    with requests.Session() as http_client:
+        api = CraiyonAPI(model=CraiyonAPI.Model.Drawing)
+        result = api.draw(http_client, "", text)
+        print(result.images)
+    return result.images[0]
  
-def tel_send_image(chat_id):
+def tel_send_image(chat_id, txt):
     url = f'https://api.telegram.org/bot{TOKEN}/sendPhoto'
     payload = {
         'chat_id': chat_id,
-        'photo': "https://raw.githubusercontent.com/fbsamples/original-coast-clothing/main/public/styles/male-work.jpg",
-        'caption': "This is a sample image"
+        'photo': "https://i.imgur.com/OYWK7pR.jpeg",
+        'caption': txt
     }
  
     r = requests.post(url, json=payload)
@@ -56,8 +59,8 @@ def index():
             chat_id, txt = tel_parse_message(msg)
             if txt == "hi":
                 tel_send_message(chat_id,"Hello, world!")
-            elif txt == "image":
-                tel_send_image(chat_id)
+            elif txt.startswith("image"):
+                tel_send_image(chat_id, txt)
  
             else:
                 tel_send_message(chat_id, 'from webhook')
